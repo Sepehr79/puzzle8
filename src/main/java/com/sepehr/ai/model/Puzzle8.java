@@ -1,6 +1,7 @@
 package com.sepehr.ai.model;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Simple implementation of puzzle 8 game
@@ -109,10 +110,13 @@ public class Puzzle8 {
         return counter;
     }
 
+    // Check if puzzle is solved
+    public boolean isSolved(){
+        return Arrays.deepEquals(arr, ANSWER);
+    }
 
 
     // Getters
-
     public int[][] getArr() {
         return arr;
     }
@@ -125,6 +129,24 @@ public class Puzzle8 {
         return zeroY;
     }
 
+
+    // Equals and hashcode method to describe difference between states
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Puzzle8 puzzle8 = (Puzzle8) o;
+        return zeroX == puzzle8.zeroX && zeroY == puzzle8.zeroY && Arrays.deepEquals(arr, puzzle8.arr);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(zeroX, zeroY);
+        result = 31 * result + Arrays.deepHashCode(arr);
+        return result;
+    }
+
+    // To string method to print result on the console
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("\n");

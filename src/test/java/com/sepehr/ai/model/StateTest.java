@@ -13,6 +13,7 @@ public class StateTest {
     @Test
     public void testChangeState(){
         var state = new Puzzle8();
+        assertTrue(state.isSolved());
         assertEquals(0 ,state.heuristic());
         LOGGER.info(state.toString());
 
@@ -61,6 +62,17 @@ public class StateTest {
         assertArrayEquals(new int[]{1, 2, 5}, state3.getArr()[0]);
         assertArrayEquals(new int[]{3, 4, 0}, state3.getArr()[1]);
         LOGGER.info(state3.toString());
+    }
+
+    @Test
+    public void testEquationStates(){
+        var state1 = new Puzzle8();
+        var state2 = new Puzzle8();
+
+        state1.down();
+        state2.down();
+
+        assertEquals(state1, state2);
     }
 
 }
