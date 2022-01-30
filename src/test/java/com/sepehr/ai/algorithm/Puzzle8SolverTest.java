@@ -51,4 +51,15 @@ public class Puzzle8SolverTest {
         assertEquals(PUZZLE_8, ans.getPuzzle8());
     }
 
+    @Test
+    public void testSolveFromPosition3(){
+        int[][] arr = new int[][] {
+                {5, 6, 1},
+                {2, 0, 3},
+                {4, 7, 8}
+        };
+        State state = new State(new Puzzle8(arr));
+        assertEquals(PUZZLE_8, PUZZLE_8_SOLVER.solveWithAStar(state).getPuzzle8());
+    }
+
 }

@@ -58,4 +58,9 @@ public class State implements Comparable {
         State state = (State) o;
         return (this.distance + this.getPuzzle8().heuristic()) - (state.distance + state.puzzle8.heuristic());
     }
+
+    @Override
+    public String toString() {
+        return puzzle8.toString();
+    }
 }
