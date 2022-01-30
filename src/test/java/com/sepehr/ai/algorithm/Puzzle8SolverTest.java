@@ -4,9 +4,13 @@ import com.sepehr.ai.model.Puzzle8;
 import com.sepehr.ai.model.State;
 import org.junit.Test;
 
+import java.util.logging.Logger;
+
 import static org.junit.Assert.assertEquals;
 
 public class Puzzle8SolverTest {
+
+    private static final Logger LOGGER = Logger.getLogger(Puzzle8SolverTest.class.getName());
 
     private static final Puzzle8 PUZZLE_8 = new Puzzle8();
 
@@ -39,6 +43,7 @@ public class Puzzle8SolverTest {
         puzzle8.right();
         puzzle8.down();
         puzzle8.down();
+        LOGGER.info(puzzle8.toString());
 
         State state = new State(puzzle8);
         State ans = PUZZLE_8_SOLVER.solveWithAStar(state);
