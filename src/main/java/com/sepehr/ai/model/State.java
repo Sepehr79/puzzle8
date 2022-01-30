@@ -5,12 +5,12 @@ import java.util.Objects;
 /**
  * Describe state on puzzle8
  */
-public class State {
+public class State implements Comparable {
 
     private final Puzzle8 puzzle8;
 
     // Distance from the starting point
-    private final int distance;
+    private int distance;
 
     public State(Puzzle8 puzzle8, int distance) {
         this.puzzle8 = puzzle8;
@@ -22,12 +22,21 @@ public class State {
         this.distance = 0;
     }
 
+    public State(State state){
+        this.puzzle8 = new Puzzle8(state.puzzle8);
+        this.distance = 0;
+    }
+
     public Puzzle8 getPuzzle8() {
         return puzzle8;
     }
 
     public int getDistance() {
         return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
     }
 
     // States are different based on their puzzle state
@@ -42,5 +51,11 @@ public class State {
     @Override
     public int hashCode() {
         return Objects.hash(puzzle8);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        State state = (State) o;
+        return (this.distance + this.getPuzzle8().heuristic()) - (state.distance + state.puzzle8.heuristic());
     }
 }
