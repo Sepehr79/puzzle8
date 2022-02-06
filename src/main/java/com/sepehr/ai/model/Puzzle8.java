@@ -1,6 +1,8 @@
 package com.sepehr.ai.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -45,8 +47,8 @@ public class Puzzle8 {
         throw new IllegalArgumentException("Zero value not found");
     }
 
-    public Puzzle8(Puzzle8 state){
-        this(copy(state.arr));
+    public Puzzle8(Puzzle8 puzzle8){
+        this(copy(puzzle8.arr));
     }
 
     /**
@@ -97,6 +99,29 @@ public class Puzzle8 {
             return true;
         }
         return false;
+    }
+
+    /**
+     * @return neighbors of current position
+     */
+    public List<Puzzle8> getNeighbors(){
+        var neighbors = new ArrayList<Puzzle8>();
+
+        Puzzle8 rightNeighbor = new Puzzle8(this);
+        Puzzle8 leftNeighbor = new Puzzle8(this);
+        Puzzle8 upNeighbor = new Puzzle8(this);
+        Puzzle8 downNeighbor = new Puzzle8(this);
+
+        if (rightNeighbor.right())
+            neighbors.add(rightNeighbor);
+        if (leftNeighbor.left())
+            neighbors.add(leftNeighbor);
+        if (upNeighbor.up())
+            neighbors.add(upNeighbor);
+        if (downNeighbor.down())
+            neighbors.add(downNeighbor);
+
+        return neighbors;
     }
 
     public int heuristic(){

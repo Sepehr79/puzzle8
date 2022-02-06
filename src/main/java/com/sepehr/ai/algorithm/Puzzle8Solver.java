@@ -1,5 +1,6 @@
 package com.sepehr.ai.algorithm;
 
+import com.sepehr.ai.model.Puzzle8;
 import com.sepehr.ai.model.State;
 
 import java.util.HashSet;
