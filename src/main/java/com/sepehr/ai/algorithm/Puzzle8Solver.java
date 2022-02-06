@@ -4,6 +4,7 @@ import com.sepehr.ai.model.Puzzle8;
 import com.sepehr.ai.model.State;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -14,7 +15,7 @@ public class Puzzle8Solver {
     public State solveWithAStar(State startingState){
         var close = new HashSet<State>();
         close.add(startingState);
-        var open = findNeighbors(startingState, close);
+        var open = findNeighborsStates(startingState, close);
         updateDistanceBaseOnCurrentState(startingState, open);
         State present = startingState;
         State lowest = getLowestState(open);
@@ -24,38 +25,25 @@ public class Puzzle8Solver {
             LOGGER.info(present.toString());
             close.add(present);
             open.remove(present);
-            Set<State> neighbors = findNeighbors(present, close);
+            Set<State> neighbors = findNeighborsStates(present, close);
             updateDistanceBaseOnCurrentState(present, neighbors);
-            open.addAll(findNeighbors(present, close));
+            open.addAll(findNeighborsStates(present, close));
             lowest = getLowestState(open);
         }
 
         return present;
     }
 
-    private Set<State> findNeighbors(State state, Set<State> close){
-        Set<State> neighbors = new HashSet<>();
-        if (state.getPuzzle8().right()){
-            if (!close.contains(state))
-                neighbors.add(new State(state));
-            state.getPuzzle8().left();
+    private Set<State> findNeighborsStates(State presentState, Set<State> close){
+        Set<State> states = new HashSet<>();
+        List<Puzzle8> neighborsSet = presentState.getPuzzle8().getNeighbors();
+        for (Puzzle8 puzzle8: neighborsSet){
+            State newState = new State(puzzle8);
+            if (!close.contains(newState)){
+                states.add(newState);
+            }
         }
-        if (state.getPuzzle8().left()){
-            if (!close.contains(state))
-                neighbors.add(new State(state));
-            state.getPuzzle8().right();
-        }
-        if (state.getPuzzle8().down()){
-            if (!close.contains(state))
-                neighbors.add(new State(state));
-            state.getPuzzle8().up();
-        }
-        if (state.getPuzzle8().up()){
-            if (!close.contains(state))
-                neighbors.add(new State(state));
-            state.getPuzzle8().down();
-        }
-        return neighbors;
+        return states;
     }
 
     private void updateDistanceBaseOnCurrentState(State state, Set<State> neighbors){
